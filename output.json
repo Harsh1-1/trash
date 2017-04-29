@@ -1,21 +1,14 @@
 {
 	"select": {
-		"column": "prenom",
-		"type": "None"
+		"column": "imdb_score",
+		"type": "SUM"
 	},
 	"from": {
-		"table": "professeur"
+		"table": "movies"
 	},
 	"join": {
 	},
 	"where": {
-		"condition": [
-			{ "column": "idProf",
-			  "type": "None",
-			  "operator": ">",
-			  "value": "OOV"
-			}
-		]
 	},
 	"group_by": {
 	},

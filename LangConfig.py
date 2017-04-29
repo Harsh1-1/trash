@@ -69,8 +69,8 @@ class LangConfig:
 	def load(self, path):
 		with open(path) as f:
 			content = f.readlines()
-			self.avg_keywords = map(self.remove_accents, map(str.strip, content[0].replace(':',',').split(",")))
-			self.avg_keywords = self.avg_keywords[1:len(self.avg_keywords)]
+			self.avg_keywords = map(str.strip, content[0].replace(':',',').split(","))
+			self.avg_keywords = self.avg_keywords[2:len(self.avg_keywords)]
 			self.sum_keywords = map(self.remove_accents, map(str.strip, content[1].replace(':',',').split(",")))
 			self.sum_keywords = self.sum_keywords[1:len(self.sum_keywords)]
 			self.max_keywords = map(self.remove_accents, map(str.strip, content[2].replace(':',',').split(",")))

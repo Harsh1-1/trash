@@ -2,7 +2,7 @@
 
 import sys
 reload(sys)
-sys.setdefaultencoding("utf-8")
+# sys.setdefaultencoding("utf-8")
 import unicodedata
 
 class Thesaurus:
@@ -20,9 +20,9 @@ class Thesaurus:
         if word in self.dictionnary.keys():
             return self.dictionnary[word]
 
-    def remove_accents(self, string):
-        nkfd_form = unicodedata.normalize('NFKD', unicode(string))
-        return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
+    # def remove_accents(self, string):
+    #     nkfd_form = unicodedata.normalize('NFKD', unicode(string))
+    #     return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
 
     def load(self, path):
         with open(path) as f:
@@ -31,8 +31,8 @@ class Thesaurus:
             for line_id in range(1,len(content)):
                 if '(' not in content[line_id]:
                     line = content[line_id].split("|")
-                    word = self.remove_accents(line[0])
-                    synonyms = self.remove_accents(content[line_id + 1]).split("|")
+                    word = line[0]
+                    synonyms = content[line_id + 1].split("|")
                     synonyms.pop(0)
                     self.add_entry(word, synonyms)
 
