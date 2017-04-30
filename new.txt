@@ -1,0 +1,5 @@
+
+SELECT COUNT(mactors.name)
+FROM mactors
+ORDER BY actors.name ASC;
+

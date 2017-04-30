@@ -1,0 +1,5 @@
+
+[1mSELECT [0m[1mCOUNT([0mactors.name[1m)[0m
+[1mFROM [0mactors
+[1mORDER BY [0mactors.name[1m ASC[0m;
+

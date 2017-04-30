@@ -1,9 +1,8 @@
-CREATE TABLE `actor`
+CREATE TABLE `actors`
 (
-    `a_id` integer NOT NULL,
-    `name` character(15) NOT NULL,
-    CONSTRAINT `actor_pkey` PRIMARY KEY (a_id),
-    CONSTRAINT `actor_a_id_check` CHECK (a_id >= 1 AND a_id <= 200000)
+    `id` integer NOT NULL,
+    `name` varchar(15) NOT NULL,
+    PRIMARY KEY ( `a_id`) 
 );
 
 
@@ -18,7 +17,7 @@ insert into `actor` values(4,'fussehsruighsru');
 CREATE TABLE `movies`
 (
     `m_id` integer NOT NULL,
-    `name` character(10) NOT NULL,
+    `name` varchar(10) NOT NULL,
     `year` integer NOT NULL,
     `imdb_score` real NOT NULL,
     `pcompany_id` integer NOT NULL,

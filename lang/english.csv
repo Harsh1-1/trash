@@ -2,12 +2,12 @@ AVG: average
 SUM: sum, total, enumerate
 MAX: maximum
 MIN: minimum
-COUNT: number, how many
+COUNT: how many, number
 JUNCTION: and
 DISJUNCTION: or
 GREATER: greater
 LESS: less
 BETWEEN: between
-ORDER: order
+ORDER: order, according
 GROUP: group
 NEGATION: not

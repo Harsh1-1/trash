@@ -223,7 +223,7 @@ class FromParser(Thread):
         return self.queries
 
 class WhereParser(Thread):
-    def __init__(self, phrases, tables_of_from, count_keywords, sum_keywords, average_keywords, max_keywords, min_keywords, greater_keywords, less_keywords, between_keywords, negation_keywords, junction_keywords, disjunction_keywords, database_dico):
+    def __init__(self, phrases, tables_of_from, count_keywords, sum_keywords, average_keywords, max_keywords, min_keywords, greater_keywords, less_keywords, between_keywords, negation_keywords, junction_keywords, disjunction_keywords, database_dico, sentence):
         Thread.__init__(self)
         self.where_objects = []
         self.phrases = phrases
@@ -240,6 +240,17 @@ class WhereParser(Thread):
         self.junction_keywords = junction_keywords
         self.disjunction_keywords = disjunction_keywords
         self.database_dico = database_dico
+        self.sentence = sentence;
+
+    def get_value_or_number(self,sentence):
+        number_as_string = ""
+        new_sentence = sentence.split()
+        for i in range(0,len(new_sentence)):
+            if(new_sentence[i].isdigit()):
+                number_as_string = new_sentence[i]
+
+        print number_as_string
+        return number_as_string
 
     def get_tables_of_column(self, column):
         tmp_table = []
@@ -384,7 +395,7 @@ class WhereParser(Thread):
                 junction = self.predict_junction(previous, current)
                 column = self.get_column_name_with_alias_table(columns_of_where[i], table_of_from)
                 operation_type = self.predict_operation_type(previous, current)
-                value = 'OOV' # Out Of Vocabulary: feature not implemented yet
+                value = self.get_value_or_number(self.sentence) #'OOV' # self.get_value_or_number(self.sentence) # Out Of Vocabulary: feature not implemented yet
                 operator = self.predict_operator(current, _next)
                 where_object.add_condition(junction, Condition(column, operation_type, operator, value))
             self.where_objects.append(where_object)
@@ -636,7 +647,7 @@ class Parser:
         
         select_parser = SelectParser(columns_of_select, tables_of_from, select_phrase, self.count_keywords, self.sum_keywords, self.average_keywords, self.max_keywords, self.min_keywords, self.database_dico)
         from_parser = FromParser(tables_of_from, columns_of_select, columns_of_where, self.database_object)
-        where_parser = WhereParser(new_where_phrase, tables_of_from, self.count_keywords, self.sum_keywords, self.average_keywords, self.max_keywords, self.min_keywords, self.greater_keywords, self.less_keywords, self.between_keywords, self.negation_keywords, self.junction_keywords, self.disjunction_keywords, self.database_dico)
+        where_parser = WhereParser(new_where_phrase, tables_of_from, self.count_keywords, self.sum_keywords, self.average_keywords, self.max_keywords, self.min_keywords, self.greater_keywords, self.less_keywords, self.between_keywords, self.negation_keywords, self.junction_keywords, self.disjunction_keywords, self.database_dico, sentence)
         group_by_parser = GroupByParser(group_by_phrase, tables_of_from, self.database_dico)
         order_by_parser = OrderByParser(order_by_phrase, tables_of_from, self.database_dico)
 

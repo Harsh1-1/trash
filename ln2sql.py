@@ -10,6 +10,8 @@ from Parser import Parser
 from Thesaurus import Thesaurus
 # from StopwordFilter import StopwordFilter
 
+import MySQLdb
+
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
@@ -54,9 +56,37 @@ class ln2sql:
         for query in queries:
             print query
 
+
+        # filename = "output.txt"
+        # f = open(filename,'w')
+        # print >> f, a
+        # f.close()
+        a = str(queries[0])
+
+        b = a.replace("\x1b[1m","")
+        query_string = b.replace("\x1b[0m","")
+
+        print query_string
+
+        db = MySQLdb.connect(host="localhost",    # your host, usually localhost
+                     user="root",         # your username
+                     passwd="",  # your password
+                     db="movie")        # name of the data base
+
+
+        cur = db.cursor()
+
+        cur.execute(query_string)
+
+        for row in cur.fetchall():
+            print row
+
+        db.close()
+
     def remove_json(self, filename="output.json"):
         if os.path.exists(filename):
             os.remove(filename)
+            
 
 def print_help_message():
     print '\n'
