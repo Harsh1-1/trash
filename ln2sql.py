@@ -88,45 +88,45 @@ class ln2sql:
             os.remove(filename)
             
 
-def print_help_message():
-    print '\n'
-    print 'Usage:'
-    print '\tpython ln2sql.py -d <path> -l <path> -i <input-sentence> [-t <path>] [-j <path>]'
-    print 'Parameters:'
-    print '\t-h\t\t\tprint this help message'
-    print '\t-d <path>\t\tpath to SQL dump file'
-    print '\t-l <path>\t\tpath to language configuration file'
-    print '\t-i <input-sentence>\tinput sentence to parse'
-    print '\t-j <path>\t\tpath to JSON output file'
-    print '\t-t <path>\t\tpath to thesaurus file'
-    print '\n'
+# def print_help_message():
+#     print '\n'
+#     print 'Usage:'
+#     print '\tpython ln2sql.py -d <path> -l <path> -i <input-sentence> [-t <path>] [-j <path>]'
+#     print 'Parameters:'
+#     print '\t-h\t\t\tprint this help message'
+#     print '\t-d <path>\t\tpath to SQL dump file'
+#     print '\t-l <path>\t\tpath to language configuration file'
+#     print '\t-i <input-sentence>\tinput sentence to parse'
+#     print '\t-j <path>\t\tpath to JSON output file'
+#     print '\t-t <path>\t\tpath to thesaurus file'
+#     print '\n'
 
 def main(argv):
     try:
         opts, args = getopt.getopt(argv,"d:l:i:t:j:")
-        database_path = None
-        input_sentence = None
-        language_path = None
+        database_path = "/root/Desktop/IR_Project/trash/database/new.sql"
+        input_sentence = raw_input("Enter your query:")
+        language_path = "/root/Desktop/IR_Project/trash/lang/english.csv"
         thesaurus_path = None
         json_output_path = None
 
-        for i in range(0, len(opts)):
-            if opts[i][0] == "-d":
-                database_path = opts[i][1]
-            elif opts[i][0] == "-l":
-                language_path = opts[i][1]
-            elif opts[i][0] == "-i":
-                input_sentence = opts[i][1]
-            elif opts[i][0] == "-j":
-                json_output_path = opts[i][1]
-            elif opts[i][0] == "-t":
-                thesaurus_path = opts[i][1]
-            else:
-                print_help_message()
-                sys.exit()
+        # for i in range(0, len(opts)):
+        #     if opts[i][0] == "-d":
+        #         database_path = opts[i][1]
+        #     elif opts[i][0] == "-l":
+        #         language_path = opts[i][1]
+        #     elif opts[i][0] == "-i":
+        #         input_sentence = opts[i][1]
+        #     elif opts[i][0] == "-j":
+        #         json_output_path = opts[i][1]
+        #     elif opts[i][0] == "-t":
+        #         thesaurus_path = opts[i][1]
+        #     else:
+        #         print_help_message()
+        #         sys.exit()
 
         if (database_path is None) or (input_sentence is None) or (language_path is None):
-            print_help_message()
+            print "query is not specified"
             sys.exit()
         else:
             if thesaurus_path is not None:
@@ -140,7 +140,8 @@ def main(argv):
         #    print color.BOLD + color.RED + str(e) + color.END
 
     except getopt.GetoptError:
-        print_help_message()
+        print "there is something wrong with the input"
+        # print_help_message()
         sys.exit()
 
 if __name__ == '__main__':

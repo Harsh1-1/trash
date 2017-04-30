@@ -6,6 +6,7 @@ import unicodedata
 from threading import Thread
 from ParsingException import ParsingException
 from Query import *
+import nltk
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -252,6 +253,21 @@ class WhereParser(Thread):
         print number_as_string
         return number_as_string
 
+    def value_detection(self,sentence):
+        l = []
+        select = ['JJ', 'NNP', 'CD']
+        text = nltk.word_tokenize(sentence)
+        tags = nltk.pos_tag(text)
+        for i, j in tags:
+            if(j in select):
+                l.append("'" + i + "'")
+        # print l
+        return l
+
+    def get_list_of_numbers(self,sentence):
+        str = sentence
+        return [s for s in str.split() if s.isdigit()]
+
     def get_tables_of_column(self, column):
         tmp_table = []
         for table in self.database_dico:
@@ -379,6 +395,8 @@ class WhereParser(Thread):
 
         for table_of_from in self.tables_of_from:
             where_object = Where()
+            oov_list = self.value_detection(self.sentence)
+            print oov_list
             for i in range(0, len(column_offset)):
             	current = column_offset[i]
 
@@ -395,7 +413,7 @@ class WhereParser(Thread):
                 junction = self.predict_junction(previous, current)
                 column = self.get_column_name_with_alias_table(columns_of_where[i], table_of_from)
                 operation_type = self.predict_operation_type(previous, current)
-                value = self.get_value_or_number(self.sentence) #'OOV' # self.get_value_or_number(self.sentence) # Out Of Vocabulary: feature not implemented yet
+                value = oov_list[i] #'OOV' # self.get_value_or_number(self.sentence) # Out Of Vocabulary: feature not implemented yet
                 operator = self.predict_operator(current, _next)
                 where_object.add_condition(junction, Condition(column, operation_type, operator, value))
             self.where_objects.append(where_object)
