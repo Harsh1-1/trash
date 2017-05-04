@@ -1,5 +1,5 @@
 
 SELECT COUNT(mactors.name)
-FROM mactors
+FROM actors
 ORDER BY actors.name ASC;
 
